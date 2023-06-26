@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{%  block content %}
+{% block content %}
 
 <h3 class="green-text text-darken-4 center-align">Tasks</h3>
 
@@ -11,4 +11,24 @@
     </div>
 </div>
 
-{% endblock %}
+
+
+<ul class="collapsible">
+    {% for task in tasks | sort(attribute="due_date") %}
+    <li>
+        <div class="collapsible-header green darken-4 white-text">
+            <i class="fa-solid fa-caret-down"></i>
+            <strong>{{ task.task_name }}</strong> : {{ task.due_date.strftime("%d %B, %Y") }}
+            {% if task.is_urgent == True %} 
+                <span><i class="fa-solid fa-triangle-exclamation urgent-task"></i></span>
+            {% endif %}
+        </div>
+        <div class="collapsible-body">
+            <strong>{{ task.category }}</strong>
+            <p>{{ task.task_description }}</p>
+        </div>
+    {% endfor %}
+    </li>
+
+
+    {% endblock %}
